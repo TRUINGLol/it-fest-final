@@ -4,7 +4,7 @@
 const mysql = require('mysql2');
 
 // Устанавливаем переменные окружения из файла .env, чтобы обеспечить безопасное хранение конфиденциальной информации
-require('dotenv').config();
+require('dotenv').config({path:__dirname+'/./../../.env'})
 
 // Создаём пул соединений с базой данных MySQL
 const pool = mysql.createPool({
