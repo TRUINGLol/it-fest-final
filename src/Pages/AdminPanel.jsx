@@ -94,7 +94,7 @@ export default function AdminPanel(){
                     </div>
                     <div className={cl.news}>
                         <h2>Добавить новость</h2>
-                        <form onSubmit={onNewsSubmit}>
+                        <form className={cl.formN} onSubmit={onNewsSubmit}>
                             <div>
                                 <input type="text" 
                                     placeholder="Название"
@@ -155,7 +155,7 @@ export default function AdminPanel(){
                         }
                     </div>
                     <div className={cl.logout}>
-                        <button onClick={logoutHandler}>Выйти</button>
+                        <button className={cl.buttonL} onClick={logoutHandler}>Выйти</button>
                     </div>
                 </div>
             <Footer/>
