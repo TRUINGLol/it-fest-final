@@ -1,6 +1,6 @@
 import React from "react";
 import cl from "./Header.module.css";
-import logo from "./free-icon-plant-leaf-9309053 1.png";
+import logo from "../../Images/logo.png";
 import { Link } from "react-router-dom"; 
 
 export default function Header(){

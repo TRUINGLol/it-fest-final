@@ -19,6 +19,7 @@
 }
 .navD{
     align-content: center;
+    margin-top: 7px;
 }
 .mLink{
     border: 3px solid white;
@@ -68,6 +69,7 @@
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    height: 19px;
 }
 .sLink>a{
     text-decoration: none;
