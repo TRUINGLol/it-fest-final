@@ -15,6 +15,7 @@ export default function Header(){
                     <li className={cl.nLink}><Link to={"/Новости"}>Новости</Link></li>  
                     <li className={cl.pLink}><Link to={"/Проекты"}>Наши проекты</Link></li>
                     <li className={cl.sLink}><Link to={"/Статьи"}>Экологические статьи</Link></li>
+                    <li className={[cl.sLink,cl.lLink].join(' ')}><Link to={"/Логин"}>Войти</Link></li>
                 </ul>
             </div>
         </div>

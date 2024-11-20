@@ -28,18 +28,18 @@ export default function Footer(){
                         <li><Link to={"/Статьи"}>Экологические статьи</Link></li>
                         <li><Link to={"/Проекты"}>Наши проекты</Link></li>
                         <li><Link to={"/Новости"}>Новости</Link></li>
-                        <li><Link to={"/Материалы"}>Дополнительные материалы</Link></li>
+                        <li><a href="https://rosuchebnik.ru/metodicheskaja-pomosch/materialy/predmet-ekologiya_type-stati/">Дополнительные материалы</a></li>
                     </ul>
                 </div>
                 <div className={cl.card3}>
                     <h2>Обратная связь</h2>
-                    <form onSubmit={submitHandler}>
+                    <form className={cl.formF} onSubmit={submitHandler}>
                         <input type="email"
                          placeholder="Email"
                          value={email}
                          onChange={(e)=>setEmail(e.target.value)}/>
 
-                         <button type="submit">Оставить заявку</button> 
+                         <button type="submit" className={cl.button}>Оставить заявку</button> 
                     </form>
                 </div>
             </div>

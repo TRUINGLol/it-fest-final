@@ -70,7 +70,7 @@ li:not(:last-child){
     font-size: 48px;
     font-weight: bold;
 }
-form{
+.formF{
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -84,7 +84,7 @@ input{
     border: 1.5px solid white;
     border-radius: 5px;
 }
-button{
+.button{
     width: 360px;
     height: 40px;
     background-color: #388E3C;
