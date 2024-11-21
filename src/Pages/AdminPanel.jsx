@@ -40,10 +40,15 @@ export default function AdminPanel(){
         catch(err){
             setAnswerTextNews(err.response.data.message);
         }
+
+        setNewsTitle("");
+        setNewsDescription("");
+        setNewsDate("");
+        setNewsContent("");
     }
 
     async function onProjectSubmit(e){
-        e.preventDefault();
+        e.preventDefault(); 
 
         try{
             const res = await axios.post(`${process.env.REACT_APP_SERVER_BASE_ADRESS}/it-fest/createPrj`,{prjTitle,prjDescription,prjContent});
@@ -55,6 +60,10 @@ export default function AdminPanel(){
         catch(err){
             setTextPrj(err.response.data.message);
         }
+
+        setPrjTitle("");
+        setPrjDescription("");
+        setPrjContent("");
     }
 
     function logoutHandler(){
@@ -88,7 +97,7 @@ export default function AdminPanel(){
                         <h2>Заявки на волонтерство</h2>
                         {
                             members.map((v)=>
-                                <p>Имя-{v.name}||Фамилия-{v.last_name}||Номер телефона-{v.phone}</p>
+                                <p>Имя-{v.name}||Фамилия-{v.last_name}||почта-{v.email}</p>
                             )
                         }
                     </div>

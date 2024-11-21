@@ -4,13 +4,27 @@ import { Link } from "react-router-dom";
 import phonePath from '../../Images/phone.png';
 import emailPath from '../../Images/mail.png';
 import pointPath from '../../Images/point.png';
+import axios from "axios";
 
 export default function Footer(){
     
     const [email,setEmail] = useState("");
 
-    function submitHandler(e){
-        e.preventDefualt();
+    const [textResponce,setTextResponce] = useState();
+
+    async function submitHandler(e){
+        e.preventDefault(); 
+
+        try{
+            const res = await axios.post(`${process.env.REACT_APP_SERVER_BASE_ADRESS}/it-fest/addFeedback`,{email});
+            if(res){
+                setTextResponce(res.data.message);
+                console.log(res.data.message);
+            }
+        }
+        catch(err){
+            setTextResponce(err.responce.data.message);
+        }
     }
     
     return(
@@ -39,7 +53,10 @@ export default function Footer(){
                          value={email}
                          onChange={(e)=>setEmail(e.target.value)}/>
 
-                         <button type="submit" className={cl.button}>Оставить заявку</button> 
+                         <button type="submit" className={cl.button}>Оставить заявку</button>
+                         {
+                            textResponce ? <p>{textResponce}</p> : <p></p>
+                         }
                     </form>
                 </div>
             </div>

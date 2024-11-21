@@ -6,6 +6,8 @@ import NotFound from "../../Pages/NotFound"
 import OurPrj from "../../Pages/OurPrj"
 import Login from "../../Pages/Login"
 import Member from "../../Pages/Member"
+import NewsContent from "../../Pages/NewsContent"
+import OurPrjContent from "../../Pages/OurPrjContent"
 
 //Обьект отвечающий за хранение всех маршрутов сайта
 
@@ -16,7 +18,9 @@ export const PublicRoutes = [
     {path:'/Новости', element:<News/>},
     {path:'/Проекты', element:<OurPrj/>},
     {path:'/Статьи', element:<Articles/>},
-    {path:'/Участие', element:<Member/>}
+    {path:'/Участие', element:<Member/>},
+    {path:'/Новость/:id/:title', element:<NewsContent/>},
+    {path:'/Проект/:id/:title', element:<OurPrjContent/>}
 ]
 
 //Частные маршруты по которым могут проходить ограниченный круг пользователей (админы, зарегестрированные пользователи)

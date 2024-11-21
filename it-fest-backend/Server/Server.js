@@ -21,8 +21,10 @@ app.get("/it-fest/news",(request,responce)=>{
 
 app.get("/it-fest/news/:id",(request,responce)=>{
     const newsID = request.params["id"];
-    database.query(`SELECT news_content.content FROM news_content INNER JOIN news ON news.id = news_content.news_id
-         WHERE news_id=?`,[newsID],(err,res)=>{
+    database.query(`SELECT news_content.content, news_content.publication_date
+                FROM news_content
+                INNER JOIN news ON news.id = news_content.news_id
+                WHERE news_content.news_id = ?;`,[newsID],(err,res)=>{
             if(err){
                 console.error("Ошибка: "+err.stack);
                 return responce.status(500).json({error:"Ошибка при получении данных из БД\nПопробуйте снова или обратитесь в службу поддержки"});
@@ -31,38 +33,26 @@ app.get("/it-fest/news/:id",(request,responce)=>{
          });
 });
 
-app.post("/it-fest/login",(request,responce)=>{
-    const username = request.body.username.username;
-    const password = request.body.username.password;
-
-    if(!username||!password){
-        return responce.status(400).json({message:"Поля параметро пустые!"});
-    }
-
-    database.query(`SELECT * FROM users WHERE login = ?`,[username], (err,res)=>{
+app.get("/it-fest/prjs",(request,responce)=>{
+    database.query("SELECT * FROM project",(err,res)=>{
         if(err){
-            return responce.status(500).json({message:"Ошибка запроса",err});
+            console.error("Ошибка",err);
+            return responce.status(500).json({error:"Ошибка при получении данных из БД\nПопробуйте снова или обратитесь в службу поддержки"})
         }
-
-        if(res.length === 0){
-            return responce.status(401).json({message:"Пользователь не найден"});
-        }
-
-        const user = res[0];
-
-        bcrypt.compare(password,user.hashPassword,(err,isMatch)=>{
-            if(err){
-                return responce.status(500).json({us:user});
-            }
-            
-            if(isMatch){
-                return responce.status(200).json({message:"Успешно!"})
-            }
-            else{
-                return responce.status(401).json({message:"Неправильный пароль!"});
-            }
-        })
+        responce.json(res);
     })
+});
+
+app.get("/it-fest/prjs/:id", (request, responce)=>{
+    const prjID = request.params["id"];
+    database.query(`SELECT project_content.content
+         FROM project_content INNER JOIN project ON project.id = project_content.prj_id
+          WHERE project_content.prj_id = ?`,[prjID],(err,res)=>{
+            if(err){
+                return responce.status(500).json({error:"Ошибка запроса в БД"});
+            }
+            responce.json(res);
+          });
 });
 
 app.get("/it-fest/feedback",(request,responce)=>{
@@ -147,6 +137,67 @@ app.post("/it-fest/createPrj",(request,responce)=>{
             return responce.status(200).json({message:"Созданно успешно!"});
         })
     })
+})
+
+app.post("/it-fest/login",(request,responce)=>{
+    const username = request.body.username.username;
+    const password = request.body.username.password;
+
+    if(!username||!password){
+        return responce.status(400).json({message:"Поля параметро пустые!"});
+    }
+
+    database.query(`SELECT * FROM users WHERE login = ?`,[username], (err,res)=>{
+        if(err){
+            return responce.status(500).json({message:"Ошибка запроса",err});
+        }
+
+        if(res.length === 0){
+            return responce.status(401).json({message:"Пользователь не найден"});
+        }
+
+        const user = res[0];
+
+        bcrypt.compare(password,user.hashPassword,(err,isMatch)=>{
+            if(err){
+                return responce.status(500).json({us:user});
+            }
+            
+            if(isMatch){
+                return responce.status(200).json({message:"Успешно!"})
+            }
+            else{
+                return responce.status(401).json({message:"Неправильный пароль!"});
+            }
+        })
+    })
+});
+
+app.post("/it-fest/addFeedback",(request,responce)=>{
+    const email = request.body.email;
+    console.log(email);
+
+    database.query("INSERT INTO feedback(email) VALUES(?)", [email], (err,res)=>{
+        if(err){
+            return responce.status(500).json({message:"Ошибка запроса "+err});
+        }
+        return responce.status(200).json({message:"Успешно!"});
+    });
+});
+
+app.post("/it-fest/addMember",(request,responce)=>{
+    const name = request.body.name;
+    const lastName = request.body.lastName;
+    const email = request.body.email;
+
+    console.log(name,lastName,email);
+
+    database.query("INSERT INTO volunteers(name,last_name,email) VALUES(?,?,?)",[name,lastName,email],(err,res)=>{
+        if(err){
+            return responce.status(500).json({message:"Ошибка запроса БД"});
+        }
+        return responce.status(200).json({message:"Успешно!"});
+    });
 })
 
 const PORT = process.env.SERVER_PORT || 3001;
